@@ -3,7 +3,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    rocq2rust = {
+    rocq2rust-flake = {
       inputs = {
         flake-utils.follows = "flake-utils";
         nix-filter.follows = "nix-filter";
@@ -18,7 +18,7 @@
       flake-utils,
       nix-filter,
       nixpkgs,
-      rocq2rust,
+      rocq2rust-flake,
       self,
     }:
     let
@@ -30,18 +30,12 @@
         pkgs = import nixpkgs { inherit system; };
         ml-pkgs = pkgs.ocamlPackages;
 
-        deps-native =
-          (with pkgs; [
-            dune_3
-          ])
-          ++ (with ml-pkgs; [
-            findlib
-            ocaml
-            ocamlformat
-            zarith
-          ]);
+        rocq2rust = rocq2rust-flake.packages.${system}.default;
+        deps-native = [ rocq2rust ];
 
         env = {
+          COQBIN = "${rocq2rust}/bin";
+          COQLIB = "${rocq2rust}/lib";
           DUNEOPT = "--display=short";
         };
 

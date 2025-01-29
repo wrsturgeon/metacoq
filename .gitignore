@@ -1,4 +1,5 @@
 metacoq-config
+.direnv
 .history
 docs/_site
 *.annot

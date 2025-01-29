@@ -1,7 +1,7 @@
 (* Distributed under the terms of the MIT license. *)
 (** * Extraction setup for template-coq.
 
-    Any extracted code planning to link with the plugin's OCaml reifier
+    Any extracted code planning to link with the plugin's Rust reifier
     should use these same directives for consistency.
 *)
 
@@ -10,8 +10,9 @@ From Stdlib Require Ascii Extraction ZArith NArith.
 From MetaCoq.Utils Require Import utils.
 From MetaCoq.Common Require Import Reflect config.
 From MetaCoq.Template Require Import Ast Induction.
-From Stdlib Require Import FSets ExtrOcamlBasic ExtrOCamlFloats ExtrOCamlInt63 ExtrOCamlPString.
+From Stdlib Require Import FSets.
 
+Extraction Language Rust.
 Extract Inductive Equations.Init.sigma => "( * )" ["(,)"].
 Extract Constant Equations.Init.pr1 => "fst".
 Extract Constant Equations.Init.pr2 => "snd".
